@@ -1,3 +1,4 @@
+const { AuthenticationError } = require("apollo-server");
 const jwt = require("jsonwebtoken");
 const { models } = require("./db");
 const secret = "catpack";
@@ -16,12 +17,12 @@ const createToken = ({ id, role }) => jwt.sign({ id, role }, secret);
  * @param {String} token jwt from client
  */
 const getUserFromToken = (token) => {
-   try {
-      const user = jwt.verify(token, secret);
-      return models.User.findOne({ id: user.id });
-   } catch (e) {
-      return null;
-   }
+  try {
+    const user = jwt.verify(token, secret);
+    return models.User.findOne({ id: user.id });
+  } catch (e) {
+    return null;
+  }
 };
 
 /**
@@ -30,10 +31,10 @@ const getUserFromToken = (token) => {
  * @param {Function} next next resolver function ro run
  */
 const authenticated = (next) => (root, args, context, info) => {
-   if (!context.user) {
-      throw new Error("not authorize");
-   }
-   return next(root, args, context, info);
+  if (!context.user) {
+    throw new AuthenticationError("Not Authenticated");
+  }
+  return next(root, args, context, info);
 };
 
 /**
@@ -43,15 +44,17 @@ const authenticated = (next) => (root, args, context, info) => {
  * @param {Function} next next resolver function to run
  */
 const authorized = (role, next) => (root, args, context, info) => {
-   if (context.user.role !== role) {
-      throw new Error(`must be a ${role}`);
-   }
-   return next(root, args, context, info);
+  if (context.user.role !== role) {
+    throw new AuthenticationError(
+      `Incorrect role, you must have a ${role} role`
+    );
+  }
+  return next(root, args, context, info);
 };
 
 module.exports = {
-   getUserFromToken,
-   authenticated,
-   authorized,
-   createToken,
+  getUserFromToken,
+  authenticated,
+  authorized,
+  createToken,
 };
