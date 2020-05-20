@@ -1,0 +1,44 @@
+{
+  "user": {
+    "id": "jBWMVGjm50l6LGwepDoty",
+    "username": "frontendmaster"
+  },
+  "pet": [
+    {
+      "id": "1",
+      "name": "moose",
+      "createdAt": "2020-02-26T21:21:39+0000",
+      "type": "DOG"
+    },
+    {
+      "id": "2",
+      "name": "garfield",
+      "createdAt": "2020-02-26T21:21:39+0000",
+      "type": "CAT"
+    },
+    {
+      "id": "3",
+      "name": "rocky",
+      "createdAt": "2020-02-26T21:21:39+0000",
+      "type": "DOG"
+    },
+    {
+      "id": "4",
+      "name": "ghost",
+      "createdAt": "2020-02-26T21:21:39+0000",
+      "type": "DOG"
+    },
+    {
+      "id": "5",
+      "name": "missi",
+      "createdAt": "2020-02-26T21:21:39+0000",
+      "type": "CAT"
+    },
+    {
+      "id": "uzSxxcZ6RLlk4aFcqPn_K",
+      "createdAt": 1584736310378,
+      "name": "nimura",
+      "type": "wolf"
+    }
+  ]
+}

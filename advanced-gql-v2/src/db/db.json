@@ -1,0 +1,70 @@
+{
+  "users": [
+    {
+      "email": "member@member.com",
+      "password": "password",
+      "role": "ADMIN",
+      "verified": false,
+      "avatar": "http",
+      "createdAt": 1571213104370,
+      "id": "Z2hlvDmLOSRZGebC_Z_aA"
+    },
+    {
+      "email": "test@tester.com",
+      "password": "something",
+      "role": "ADMIN",
+      "verified": false,
+      "avatar": "http",
+      "createdAt": 1587151461231,
+      "id": "8am5IwDK5Rw-8WPoqWISX"
+    },
+    {
+      "email": "member@test.com",
+      "password": "password",
+      "role": "MEMBER",
+      "verified": false,
+      "avatar": "http",
+      "createdAt": 1587153899560,
+      "id": "Qpe7bqc-HEdMknFLW50ss"
+    }
+  ],
+  "posts": [
+    {
+      "message": "this is a new post",
+      "author": "8am5IwDK5Rw-8WPoqWISX",
+      "createdAt": 1588958215361,
+      "id": "7L3WB9MndjKde4mMc1UQI"
+    },
+    {
+      "message": "this is a new post",
+      "author": "8am5IwDK5Rw-8WPoqWISX",
+      "createdAt": 1588958320600,
+      "id": "VXPc5vAZYjwzXMXF_Yal0"
+    },
+    {
+      "message": "this is a post after all erros were clear",
+      "author": "8am5IwDK5Rw-8WPoqWISX",
+      "createdAt": 1588961519846,
+      "id": "1dzV-Mg72hClEfUMb0Kj9"
+    },
+    {
+      "message": "this is a another post since likes and views are null",
+      "author": "8am5IwDK5Rw-8WPoqWISX",
+      "createdAt": 1588961564816,
+      "id": "PawF9-wQ38HTwlW7rgnjX"
+    },
+    {
+      "message": "this is a another post since likes and views are null",
+      "author": "8am5IwDK5Rw-8WPoqWISX",
+      "createdAt": 1588968737120,
+      "id": "XR_cJh7ACo65aSZqEqArH"
+    },
+    {
+      "message": "no more errors regarding the likes",
+      "author": "8am5IwDK5Rw-8WPoqWISX",
+      "createdAt": 1588968823082,
+      "id": "a3MynM1O6EHfFo5IJMFLZ"
+    }
+  ],
+  "settings": []
+}
