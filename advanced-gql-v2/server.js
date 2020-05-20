@@ -1,15 +1,48 @@
-const { ApolloServer, PubSub } = require("apollo-server");
+const {
+  ApolloServer,
+  PubSub,
+  AuthenticationError,
+  UserInputError,
+  ApolloError,
+  SchemaDirectiveVisitor,
+} = require("apollo-server");
+const { defaultFieldResolver, GraphQLString } = require("graphql"); // function that takes a value to look at the keys and compare them to the fields
 const gql = require("graphql-tag");
 
 const pubSub = new PubSub();
 const NEW_ITEM = "NEW_ITEM";
 
+class LogDirective extends SchemaDirectiveVisitor {
+  visitFieldDefinition(field) {
+    const resolver = field.resolve || defaultFieldResolver;
+
+    field.args.push({
+      type: GraphQLString,
+      name: "message",
+    });
+
+    field.resolve = (root, { message, ...rest }, context, info) => {
+      const { message: schemaMessage } = this.args;
+      console.log(
+        "we just override the resolver ⚡️",
+        message || schemaMessage
+      );
+      return resolver.call(this, root, rest, context, info);
+    };
+  }
+}
+
 const typeDefs = gql`
+  directive @log(message: String = "default message") on FIELD_DEFINITION
+
   type User {
-    id: ID!
+    id: ID! @log(message: "this is not the default message")
     username: String!
     error: String
-    createdAt: Int!
+      @deprecated(
+        reason: "we transition into a new business model, use this field instead"
+      )
+    createdAt: String!
   }
   type Settings {
     user: User!
@@ -82,7 +115,8 @@ const resolvers = {
   },
   User: {
     error() {
-      throw new Error("You cant do this");
+      // throw new Error("You cant do this");
+      return "something";
     },
   },
 };
@@ -90,10 +124,13 @@ const resolvers = {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  formatError(error) {
-    console.log(error);
-    // return new Error('This is a custom error');
-    return error;
+  //   formatError(error) {
+  //     // console.log(error);
+  //     // return new Error('This is a custom error');
+  //     return error;
+  //   },
+  schemaDirectives: {
+    log: LogDirective,
   },
   context({ connection, req }) {
     if (connection) {
