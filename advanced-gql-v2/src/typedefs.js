@@ -1,107 +1,110 @@
 const gql = require("graphql-tag");
 
 module.exports = gql`
-   enum Theme {
-      DARK
-      LIGHT
-   }
+  directive @dateFormat(format: String = "dd MMM yyy") on FIELD_DEFINITION
+  directive @authenticated on FIELD_DEFINITION
+  directive @authorized(role: Role!) on FIELD_DEFINITION
+  enum Theme {
+    DARK
+    LIGHT
+  }
 
-   enum Role {
-      ADMIN
-      MEMBER
-      GUEST
-   }
+  enum Role {
+    ADMIN
+    MEMBER
+    GUEST
+  }
 
-   type User {
-      id: ID!
-      email: String!
-      avatar: String!
-      verified: Boolean!
-      createdAt: String!
-      posts: [Post]!
-      role: Role!
-      settings: Settings!
-   }
+  type User {
+    id: ID!
+    email: String!
+    avatar: String!
+    verified: Boolean!
+    createdAt: String! @dateFormat
+    posts: [Post]!
+    role: Role!
+    settings: Settings!
+  }
 
-   type AuthUser {
-      token: String!
-      user: User!
-   }
+  type AuthUser {
+    token: String!
+    user: User!
+  }
 
-   type Post {
-      id: ID!
-      message: String!
-      author: User!
-      createdAt: String!
-      likes: Int!
-      views: Int!
-   }
+  type Post {
+    id: ID!
+    message: String!
+    author: User!
+    createdAt: String! @dateFormat
+    likes: Int!
+    views: Int!
+  }
 
-   type Settings {
-      id: ID!
-      user: User!
-      theme: Theme!
-      emailNotifications: Boolean!
-      pushNotifications: Boolean!
-   }
+  type Settings {
+    id: ID!
+    user: User!
+    theme: Theme!
+    emailNotifications: Boolean!
+    pushNotifications: Boolean!
+  }
 
-   type Invite {
-      email: String!
-      from: User!
-      createdAt: String!
-      role: Role!
-   }
+  type Invite {
+    email: String!
+    from: User!
+    createdAt: String! @dateFormat
+    role: Role!
+  }
 
-   input NewPostInput {
-      message: String!
-   }
+  input NewPostInput {
+    message: String!
+  }
 
-   input UpdateSettingsInput {
-      theme: Theme
-      emailNotifications: Boolean
-      pushNotifications: Boolean
-   }
+  input UpdateSettingsInput {
+    theme: Theme
+    emailNotifications: Boolean
+    pushNotifications: Boolean
+  }
 
-   input UpdateUserInput {
-      email: String
-      avatar: String
-      verified: Boolean
-   }
+  input UpdateUserInput {
+    email: String
+    avatar: String
+    verified: Boolean
+  }
 
-   input InviteInput {
-      email: String!
-      role: Role!
-   }
+  input InviteInput {
+    email: String!
+    role: Role!
+  }
 
-   input SignupInput {
-      email: String!
-      password: String!
-      role: Role!
-   }
+  input SignupInput {
+    email: String!
+    password: String!
+    role: Role!
+  }
 
-   input SigninInput {
-      email: String!
-      password: String!
-   }
+  input SigninInput {
+    email: String!
+    password: String!
+  }
 
-   type Query {
-      me: User!
-      posts: [Post]!
-      post(id: ID!): Post!
-      userSettings: Settings!
-      feed: [Post]!
-   }
+  type Query {
+    me: User! @authenticated
+    posts: [Post]! @authenticated
+    post(id: ID!): Post! @authenticated
+    userSettings: Settings! @authenticated
+    feed: [Post]!
+  }
 
-   type Mutation {
-      updateSettings(input: UpdateSettingsInput!): Settings!
-      createPost(input: NewPostInput!): Post!
-      updateMe(input: UpdateUserInput!): User
-      invite(input: InviteInput!): Invite!
-      signup(input: SignupInput!): AuthUser!
-      signin(input: SigninInput!): AuthUser!
-   }
+  type Mutation {
+    updateSettings(input: UpdateSettingsInput!): Settings! @authenticated
+    createPost(input: NewPostInput!): Post!
+    updateMe(input: UpdateUserInput!): User @authenticated
+    invite(input: InviteInput!): Invite! @authenticated @authorized(role: ADMIN)
+    signup(input: SignupInput!): AuthUser!
+    signin(input: SigninInput!): AuthUser!
+  }
 
-   type Subscription {
-      newPost: Post
-   }
+  type Subscription {
+    newPost: Post
+  }
 `;
