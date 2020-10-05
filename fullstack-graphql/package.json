@@ -7,7 +7,7 @@
     "apollo-cache-inmemory": "^1.6.3",
     "apollo-client": "^2.6.4",
     "apollo-link-http": "^1.5.16",
-    "apollo-server": "^2.9.6",
+    "apollo-server": "^2.18.1",
     "babel-plugin-emotion": "^10.0.21",
     "flexboxgrid": "^6.3.1",
     "graphql": "^14.5.8",
@@ -45,7 +45,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
-    "jest": "^24.9.0",
+    "jest": "^26.4.2",
     "parcel": "^1.12.3"
   }
 }
